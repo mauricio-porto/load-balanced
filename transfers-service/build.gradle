@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.6'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.acme.sandbox'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    ajc
+    aspects {
+        extendsFrom runtimeOnly
+    }
+    all {
+        resolutionStrategy.cacheChangingModulesFor 0, "seconds"
+    }
+    implementation.exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+}
+
+ext {
+    lombokVersion = "1.18.26"
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+
+    implementation("org.projectlombok:lombok:${lombokVersion}")
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+bootJar {
+    enabled = false
+}
+

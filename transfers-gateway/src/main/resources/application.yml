@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: transfers-gateway
+
+server:
+  port: 8888
+
+transfers-gateway:
+  ratio: 0.6

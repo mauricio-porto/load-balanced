@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: transfers-service
+
+server:
+  port: 8090
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: experimental
+server:
+  port: 9090
