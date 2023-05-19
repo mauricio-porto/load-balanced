@@ -37,7 +37,7 @@ public class TransferClientApplication {
     @PostMapping(value = "/transfers",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<TransferResponse> backToDell(
+    public Mono<TransferResponse> transfer(
             @RequestBody Transfer transfer) {
 
         return WebClient.builder()
@@ -49,5 +49,4 @@ public class TransferClientApplication {
                 .bodyToMono(TransferResponse.class);
 
     }
-
 }

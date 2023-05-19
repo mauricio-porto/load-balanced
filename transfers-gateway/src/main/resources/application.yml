@@ -7,3 +7,14 @@ server:
 
 transfers-gateway:
   ratio: 0.6
+  routes:
+    - route:
+        name: default
+        host: localhost
+        port: 8090
+        url: transfers/
+    - route:
+        name: experimental
+        host: localhost
+        port: 9090
+        url: transfers/

@@ -17,7 +17,7 @@ import java.util.Map;
 @SpringBootApplication
 public class TransferServiceApplication {
 
-    private static Logger log = LoggerFactory.getLogger(TransferServiceApplication.class);
+    private static final Logger log = LoggerFactory.getLogger(TransferServiceApplication.class);
 
     public static void main(String[] args) {
         SpringApplication.run(TransferServiceApplication.class, args);

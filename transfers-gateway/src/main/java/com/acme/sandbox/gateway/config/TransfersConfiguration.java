@@ -9,12 +9,14 @@ import org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.web.reactive.function.client.ClientRequest;
 
 @Slf4j
 @RequiredArgsConstructor
+@Configuration
 public class TransfersConfiguration {
 
     private final TransfersWebClientConfig transfersWebClientConfig;
@@ -22,7 +24,7 @@ public class TransfersConfiguration {
     @Bean
     @Primary
     ServiceInstanceListSupplier serviceInstanceListSupplier() {
-        return new TransfersServiceInstanceListSupplier("transfers-gateway");
+        return new TransfersServiceInstanceListSupplier("transfers-gateway", transfersWebClientConfig);
     }
 
     @Bean
@@ -36,23 +38,18 @@ public class TransfersConfiguration {
 
     @Bean
     public LoadBalancerClientRequestTransformer transformer() {
-        return new LoadBalancerClientRequestTransformer() {
-            @Override
-            public ClientRequest transformRequest(ClientRequest request, ServiceInstance instance) {
-                log.warn("INSIDE TRANSFORMER");
+        return (request, instance) -> {
 
-                boolean experimental = instance.getInstanceId().contains("experimental");
-                if (!experimental) {
-                    return request;
-                }
-
-                log.warn("EXPERIMENTAL ROUTE");
-
-                return ClientRequest.from(request)
-                        .header("experimental", instance.getInstanceId())
-                        .body(request.body())   // TODO: replace body
-                        .build();
+            boolean experimental = instance.getInstanceId().contains("experimental");
+            if (!experimental) {
+                return request;
             }
+
+            return ClientRequest.from(request)
+                    .header("experimental", instance.getInstanceId())
+                    .body(request.body())   // TODO: replace body
+                    .url(request.url())
+                    .build();
         };
     }
 }
