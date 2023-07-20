@@ -2,3 +2,4 @@ rootProject.name = 'load-balanced'
 
 include 'transfers-service'
 include 'transfers-gateway'
+include 'mutatis-mutandis'

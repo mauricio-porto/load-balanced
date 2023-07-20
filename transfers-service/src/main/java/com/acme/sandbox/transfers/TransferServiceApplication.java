@@ -51,6 +51,11 @@ public class TransferServiceApplication {
                         .build());
     }
 
+    @GetMapping("/dizai")
+    public String digo() {
+        return "Ditto!";
+    }
+
     @GetMapping("/")
     public String smokeTest() {
         log.info("Smoke test");

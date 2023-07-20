@@ -1,4 +1,4 @@
-package com.acme.sandbox.transfers.payloads;
+package com.example.mutatismutandis.payloads;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +13,5 @@ public class TransferResponse {
 
     private Long assetId;
     private Long instructionId;
-    private String workflowId;
 
 }
